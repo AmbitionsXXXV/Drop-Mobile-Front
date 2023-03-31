@@ -14,6 +14,7 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
     'prettier/prettier': 'error',
     'react/jsx-wrap-multilines': 'off',
+    'object-curly-newline': 'off',
   },
   parser: require.resolve('@typescript-eslint/parser'),
   parserOptions: {
