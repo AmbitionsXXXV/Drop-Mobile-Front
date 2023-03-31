@@ -1,21 +1,52 @@
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { useMutation } from '@apollo/client';
+import { Button, Form, Input } from 'antd-mobile';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+import { UPDATE } from './graphql/demo';
+import styles from './App.module.less';
 
-function App() {
+const App = () => {
+  const [update] = useMutation(UPDATE);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-prefers-color-scheme', 'dark');
+  }, []);
+
+  const onClickHandler = (v: any) => {
+    update({
+      variables: {
+        id: 'cb71e40d-9f15-40ef-a137-1acaa38831f4',
+        params: {
+          ...v,
+        },
+      },
+    });
+  };
+
   return (
-    <div className="App">
-      <div>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className={styles.container}>
+      <Form
+        className={classNames(styles.form, styles.formPadding)}
+        layout="horizontal"
+        onFinish={onClickHandler}
+        footer={
+          <Button block type="submit" color="primary" size="large">
+            提交
+          </Button>
+        }
+      >
+        <Form.Item name="name" label="姓名">
+          <Input />
+        </Form.Item>
+        <Form.Item name="desc" label="描述">
+          <Input />
+        </Form.Item>
+        {/* <Form.Item name="actor" label="头像">
+          <ImageUploader upload={uploadHandler} />
+        </Form.Item> */}
+      </Form>
     </div>
   );
-}
+};
 
 export default App;

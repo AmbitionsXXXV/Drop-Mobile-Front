@@ -13,6 +13,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 1,
     'arrow-parens': ['error', 'as-needed'],
     'prettier/prettier': 'error',
+    'react/jsx-wrap-multilines': 'off',
   },
   parser: require.resolve('@typescript-eslint/parser'),
   parserOptions: {
