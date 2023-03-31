@@ -3,39 +3,41 @@ import useMount from './useMount';
 
 interface IOptions {
   params: Record<string, string>;
-  manual: boolean;
+  manual?: boolean;
   onSuccess?: (res: unknown) => void;
   onError?: (err: unknown) => void;
 }
 
 /**
- * 1.组件初始化发送请求
- * @param service
- * @param params
- * @returns
+ * 1 实现组件初始化，发送请求获取数据
+ * 2 手动触发请求
  */
 const useRequest = (
   service: (params: Record<string, string>) => Promise<unknown>,
   options: IOptions,
-  params: Record<string, string>,
 ) => {
   const [data, setData] = useState<unknown>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const init = useCallback(
-    (params: Record<string, string>) => {
+    (curParams: Record<string, string>) => {
       setLoading(true);
-      return service(params)
+      return service(curParams)
         .then(res => {
           setData(res);
           setLoading(false);
-          options.onSuccess && options.onSuccess(res);
+          if (options.onSuccess) {
+            options.onSuccess(res);
+          }
         })
-        .catch(err => {
+        .catch(error => {
           setLoading(false);
-          options.onError && options.onError(err);
+          if (options.onError) {
+            options.onError(error);
+          }
         });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [service],
   );
 
@@ -47,7 +49,7 @@ const useRequest = (
 
   const run = (runParams: Record<string, string>) => init(runParams);
 
-  return { data, loading, run };
+  return { loading, data, run };
 };
 
 export default useRequest;
