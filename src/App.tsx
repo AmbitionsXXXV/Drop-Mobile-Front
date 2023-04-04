@@ -45,9 +45,9 @@ const App = () => {
         <Form.Item name="desc" label="描述">
           <Input />
         </Form.Item>
-        {/* <Form.Item name="actor" label="头像">
+        <Form.Item name="actor" label="头像">
           <ImageUploader upload={uploadHandler} />
-        </Form.Item> */}
+        </Form.Item>
       </Form>
     </div>
   );
